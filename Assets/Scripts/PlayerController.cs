@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     int playerNum;
 
+    [SerializeField]
+    GameObject ball;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +38,7 @@ public class PlayerController : MonoBehaviour
                 transform.Translate(-Vector3.up * movementMultiplier * Time.deltaTime);
             }
 
+
         }
         else if (player == 2)
         {
@@ -46,6 +50,7 @@ public class PlayerController : MonoBehaviour
             {
                 transform.Translate(-Vector3.up * movementMultiplier * Time.deltaTime);
             }
+
         }
 
     }
@@ -53,7 +58,9 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-            collision.rigidbody.AddForce(-collision.relativeVelocity, ForceMode.Impulse);
+        var opposite = -collision.gameObject.GetComponent<Rigidbody>().velocity;
+
+         collision.gameObject.GetComponent<Rigidbody>().AddForce(opposite * 10);
 
     }
 }
